@@ -1,0 +1,12 @@
+<div class="container-sm">
+  <%=form_with model: resource do |f|%>
+    <div class="input gap_zero items-left mt-1_625">
+      <%=f.label :body, class: "content-sm"%>
+      <%=f.text_area :body, placeholder: "Remember to think before write...",
+                      class: "input__content input__container mb-2"%>
+    </div>
+    <div class="flex flex-center-items">
+      <%=f.submit "Edit",class: "button button--primary mb-4" %>
+    </div>
+  <%end%>
+</div>

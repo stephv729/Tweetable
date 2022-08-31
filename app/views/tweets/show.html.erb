@@ -1,0 +1,55 @@
+<div class="container center">
+  <h1 class="content-lg bg-white p-1">Tweet Detail</h1>
+  <div class="flex gap-0_5 p-xs bg-white border-bg">      
+      <%= image_tag(@tweet.user.cover,:class =>"user-cover") if @tweet.user.cover.attached?%>
+      <div class="flex flex-column items-left w-full">
+        <div class="flex gap-0_5">
+          <%=tag.p @tweet.user.name, class:"primary-text bold"%>
+          <%=tag.p "@".concat(@tweet.user.username), class:"secondary-text"%>
+          <%=tag.p time_ago_in_words(@tweet.created_at), class:"secondary-text"%>
+        </div>
+        <%=tag.p @tweet.body, class:"black mb-2"%>
+        <div class="flex gap-0_625 items-center w-full">
+          <%=link_to image_tag("icons/comments.svg"), @tweet%>
+          <%=tag.p @tweet.comments_count %>
+        </div>
+      </div>
+  </div>
+  <!--<div class="flex gap-0_5 p-xs">      
+    <%=image_tag(@tweet.user.cover,:class =>"user-cover") if @tweet.user.cover.attached?%>
+    <div class="flex flex-column items-left">
+      <div class="flex gap-0_5">
+        <%=link_to "#{@tweet.user.name}", "#", class:"primary-text bold"%>
+        <%=tag.p "@".concat(@tweet.user.username), class:"secondary-text"%>
+        <%=tag.p time_ago_in_words(@tweet.created_at), class:"secondary-text"%>
+      </div>
+      <%=tag.p @tweet.body%>
+      <div class="flex gap-0_625">
+        <%="Comments"%>
+        <%=tag.p @tweet.comments.length%>
+      </div>
+    </div>
+  </div>-->
+  <div class="rectangle bg-2"></div>
+  <%= render "shared/error_messages", resource: @comment %>
+  <%= render "comments/form", tweet: @tweet if user_signed_in?%>
+
+  <%@tweet.comments.reverse.each do |c|%>
+    <div class="flex gap-0_5 p-xs bg-white border-bg">      
+      <%=link_to image_tag(c.user.cover,:class =>"user-cover"), "#" if c.user.cover.attached?%>
+      <div class="flex flex-column items-left w-full">
+        <div class="flex gap-0_5">
+          <%=link_to "#{c.user.name}", "#", class:"primary-text bold"%>
+          <%=tag.p "@".concat(c.user.username), class:"secondary-text"%>
+          <%=tag.p time_ago_in_words(c.created_at), class:"secondary-text"%>
+        </div>
+        <%=tag.p c.body, class:"black mb-2"%>
+        <% authorization = user_signed_in? ? current_user==c.user : false %>
+        <div class= "flex gap-1 w-full content-right">
+          <%= link_to image_tag("icons/delete.svg"),c, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if authorization%>
+          <%= link_to image_tag("icons/edit.svg"), edit_comment_path(c) if authorization %>
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

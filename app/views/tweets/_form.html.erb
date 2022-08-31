@@ -1,0 +1,9 @@
+<%=form_with model: tweet do |f|%>
+  <div class="flex gap-0_5 p-xs bg-white border-bg">      
+    <%= image_tag(current_user.cover,:class =>"user-cover") if current_user.cover.attached?%>
+    <div class="flex flex-column items-right w-full">
+      <%=f.text_area :body, placeholder: "Remember to think before write...", class: "t-input mb-2 w-full"%>
+      <%=f.submit "Tweet",class: "button button--primary mb-4" %>
+    </div>
+  </div>
+<%end%>

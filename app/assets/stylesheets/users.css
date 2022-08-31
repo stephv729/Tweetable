@@ -1,0 +1,7 @@
+.user-cover {
+  height: 3.125rem;
+  width: 3.125rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--background-2);
+}

@@ -1,0 +1,28 @@
+<div class="container center">
+  <h1 class="content-lg bg-white p-1">Home</h1>
+  <%= render "shared/error_messages", resource: @tweet %>
+  <%= render "form", tweet: @tweet if user_signed_in? %>
+  <div class="rectangle bg-2"></div>
+  <% Tweet.order(:created_at).reverse.each do |t| %>
+    <div class="flex gap-0_5 p-xs bg-white border-bg">      
+      <%= image_tag(t.user.cover,:class =>"user-cover") if t.user.cover.attached?%>
+      <div class="flex flex-column items-left w-full">
+        <div class="flex gap-0_5">
+          <%=tag.p t.user.name, class:"primary-text bold"%>
+          <%=tag.p "@".concat(t.user.username), class:"secondary-text"%>
+          <%=tag.p time_ago_in_words(t.created_at), class:"secondary-text"%>
+        </div>
+        <%=link_to "#{t.body}", t, class:"black mb-2"%>
+        <div class="flex gap-0_625 items-center w-full">
+          <%=link_to image_tag("icons/comments.svg"), t%>
+          <%=tag.p t.comments_count %>
+          <div class= "flex gap-1 w-full content-right">
+            <% authorization = user_signed_in? ? current_user==t.user : false %>
+            <%= link_to image_tag("icons/delete.svg"),t, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } if authorization%>
+            <%= link_to image_tag("icons/edit.svg"), edit_tweet_path(t) if authorization%>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

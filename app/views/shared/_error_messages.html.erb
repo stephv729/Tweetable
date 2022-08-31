@@ -1,0 +1,8 @@
+<% if resource.errors.any? %>
+    <h2>Unable to process your request. Try again.</h2>
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+<% end %>
